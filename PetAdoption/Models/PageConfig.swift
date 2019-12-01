@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import RxDataSources
 
 struct PageConfig {
     let name: String
     let identifiers: [ElementType]
+    let dataSource: [SectionModel<String, Element>]
 }

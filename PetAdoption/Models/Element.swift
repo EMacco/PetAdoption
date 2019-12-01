@@ -18,9 +18,10 @@ struct Element: Decodable {
     let keyboard: KeyboardType?
     let formattedNumeric: String?
     let mode: Mode?
+    let options: [String]?
     
     enum CodingKeys: String, CodingKey {
-        case type, file, uniqueId="unique_id", rules, label, isMandatory, keyboard, formattedNumeric, mode
+        case type, file, uniqueId="unique_id", rules, label, isMandatory, keyboard, formattedNumeric, mode, options
     }
 }
 
@@ -31,8 +32,6 @@ enum ElementType: String, Decodable {
     case yesNo = "yesno"
     case formattedNumeric = "formattednumeric"
     case dateTime = "datetime"
-    case sectionTitle
-    case pageTitle
     case other
     
     init(from decoder: Decoder) throws {
