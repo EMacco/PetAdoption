@@ -30,6 +30,7 @@
               "type": "text",
               "label": "Email address",
               "isMandatory": true,
+              "keyboard": "email",
               "unique_id": "text_2",
               "rules": []
             },
@@ -49,6 +50,15 @@
               "isMandatory": true,
               "unique_id": "datetime_1",
               "rules": []
+            },
+            {
+                "mode": "select",
+                "type": "text",
+                "label": "Gender",
+                "unique_id": "select_1",
+                "options": ["Male", "Female"],
+                "isMandatory": false,
+                "rules": []
             }
           ]
         }
