@@ -12,6 +12,11 @@ import SDWebImage
 class PhotoTableViewCell: UITableViewCell {
     
     private var elementID: String?
+    var formViewModel: IFormViewModel? {
+        didSet {
+            setCellVisibility()
+        }
+    }
     var elementInfo: Element? {
         didSet {
             photoImageView.sd_setImage(with: URL(string: elementInfo!.file!), placeholderImage: #imageLiteral(resourceName: "imagePlaceholder"))
@@ -33,7 +38,21 @@ class PhotoTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         
         addSubview(photoImageView)
-        
+    }
+    
+    private func setCellVisibility() {
+        if (formViewModel?.isCollapsed(id: elementID!) ?? false) {
+            self.isHidden = true
+            self.photoImageView.removeAllConstraints()
+            self.photoImageView.anchor(top: topAnchor, bottom: bottomAnchor, height: 1)
+        } else {
+            self.isHidden = false
+            self.photoImageView.removeAllConstraints()
+            self.addAllConstraints()
+        }
+    }
+    
+    private func addAllConstraints() {
         photoImageView.anchor(top: topAnchor, paddingTop: 8, bottom: bottomAnchor, paddingBottom: 8, width: 100, height: 100)
         photoImageView.centerHorizontally(with: self)
     }

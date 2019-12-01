@@ -14,9 +14,15 @@ class FormViewModel: IFormViewModel {
     
     var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> = PublishSubject()
     var form: Form?
+    var collapsedElements = Set<String>()
+    var userInput = [String: String]()
     
-    func getPagesTableViewIdentifiers() {
+    init() {
         self.form = getJsonData()
+    }
+    
+    // MARK:- Generate tableviews
+    func getPagesTableViewIdentifiers() {
         if let pages = self.form?.pages {
             var pagesConfig = [PageConfig]()
             for page in pages {
@@ -26,6 +32,7 @@ class FormViewModel: IFormViewModel {
         }
     }
     
+    // MARK:- Generate Datasource
     private func getDataSource(for page: Page) -> [SectionModel<String, Element>] {
         var pageInfo = [SectionModel<String, Element>]()
         
@@ -41,6 +48,7 @@ class FormViewModel: IFormViewModel {
         
     }
     
+    // MARK:- Retrieve and Decode JSON Data
     private func getJsonData() -> Form? {
         if let url = Bundle.main.url(forResource: "pet_adoption", withExtension: "json") {
             do {
@@ -55,16 +63,65 @@ class FormViewModel: IFormViewModel {
         return nil
     }
     
+    // MARK:- Get tableview identifiers
     private func getTableViewCellIdentifiers(for page: Page) -> [ElementType] {
         var identifiers = Set<ElementType>()
         
         for section in page.sections {
             for element in section.elements {
+                getElementsToHide(element: element)
                 identifiers.insert(element.type)
             }
         }
         
         return Array(identifiers)
+    }
+    
+    // MARK:- Show/Hide Elements
+    func getElementsToHide(element: Element) {
+        for rule in element.rules {
+            let actual = RuleValue(rawValue: userInput[element.uniqueId] ?? "No") ?? RuleValue.No
+            let expected = rule.value
+            if compareRule(actual: actual, expected: expected, operation: rule.condition) {
+                if rule.action == "show" {
+                    showElement(elements: rule.targets)
+                } else {
+                    hideElement(elements: rule.targets)
+                }
+            } else {
+                if rule.otherwise == "show" {
+                    showElement(elements: rule.targets)
+                } else {
+                    hideElement(elements: rule.targets)
+                }
+            }
+        }
+    }
+    
+    func isCollapsed(id: String) -> Bool {
+        return collapsedElements.contains(id)
+    }
+    
+    private func compareRule(actual: RuleValue, expected: RuleValue, operation: Condition) -> Bool {
+        switch operation {
+            case .equals:
+                return actual == expected
+            default:
+                return false
+        }
+    }
+    
+    private func hideElement(elements: [String]) {
+        for id in elements {
+            self.collapsedElements.insert(id)
+        }
+    }
+    
+    private func showElement(elements: [String]) {
+        for id in elements {
+            guard let index = self.collapsedElements.firstIndex(of: id) else { continue }
+            self.collapsedElements.remove(at: index)
+        }
     }
     
 }

@@ -82,16 +82,40 @@
                   "action": "show",
                   "otherwise": "hide",
                   "targets": [
-                    "text_3"
+                    "text_3",
+                    "text_4",
+                    "embeddedphoto_2"
+                  ]
+                },
+                {
+                  "condition": "equals",
+                  "value": "Yes",
+                  "action": "hide",
+                  "otherwise": "show",
+                  "targets": [
+                    "select_1"
                   ]
                 }
               ]
+            },
+            {
+                "type": "embeddedphoto",
+                "file": "https://www.jacksons-fencing.co.uk/-/media/jacksons-products/timber/27373.jpg?mh=460&mw=690&hash=B922CCB37CF9BBC56A285287BE62955DFED541FB",
+                "unique_id": "embeddedphoto_2",
+                "rules": []
             },
             {
               "type": "text",
               "label": "Is it fenced? Also indicate the type",
               "isMandatory": false,
               "unique_id": "text_3",
+              "rules": []
+            },
+            {
+              "type": "text",
+              "label": "This is just an extra field",
+              "isMandatory": false,
+              "unique_id": "text_78",
               "rules": []
             }
           ]
