@@ -64,7 +64,10 @@ class MainViewController: UIViewController {
         nextBtn.anchor(bottom: self.view.bottomAnchor, paddingBottom: 30, left: self.view.leftAnchor, paddingLeft: 16, right: self.view.rightAnchor, paddingRight: 16, height: 50)
     }
     
+    var done = false
     func updateViews() {
+        guard done == false else { return }
+        done = true
         containerView.anchor(top: self.view.topAnchor, paddingTop: 0, bottom: self.view.bottomAnchor, paddingBottom: 0, left: self.view.leftAnchor, paddingLeft: currentXPosition)
         containerView.equalWidth(with: self.view, multiplier: CGFloat(formTableViews.count))
         
@@ -125,14 +128,18 @@ class MainViewController: UIViewController {
                     let cell = table.dequeueReusableCell(withIdentifier: item.type.rawValue) as! TextTableViewCell
                     cell.elementInfo = item
                     cell.tableView = table
+                    cell.formViewModel = self.formViewModel
                     return cell
                 case .embeddedPhoto:
                     let cell = table.dequeueReusableCell(withIdentifier: item.type.rawValue) as! PhotoTableViewCell
                     cell.elementInfo = item
+                    cell.formViewModel = self.formViewModel
                     return cell
                 case .yesNo:
                     let cell = table.dequeueReusableCell(withIdentifier: item.type.rawValue) as! OptionTableViewCell
                     cell.elementInfo = item
+                    cell.allPagesTableViews = self.formTableViews
+                    cell.formViewModel = self.formViewModel
                     return cell
                 default:
                     let cell = UITableViewCell()
@@ -173,7 +180,7 @@ class MainViewController: UIViewController {
         tableView.anchor(top: titleLbl.bottomAnchor, paddingTop: 0, bottom: nextBtn.topAnchor, paddingBottom: 18)
         tableView.equalWidth(with: self.view, multiplier: 1)
         
-        if formTableViews.count > 0 {
+        if formTableViews.count > 0 && pageIndex > 0 {
             let previousView = self.formTableViews[pageIndex-1]
             tableView.anchor(left: previousView.rightAnchor, paddingLeft: 0)
         } else {

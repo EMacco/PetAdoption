@@ -10,10 +10,13 @@ import UIKit
 
 class OptionTableViewCell: UITableViewCell {
     private var elementID: String?
+    var formViewModel: IFormViewModel?
+    var allPagesTableViews: [UITableView]?
     var elementInfo: Element? {
         didSet {
             elementID = elementInfo!.uniqueId
             titleLbl.text = elementInfo!.label
+            setSwitchStatus()
         }
     }
     
@@ -21,7 +24,6 @@ class OptionTableViewCell: UITableViewCell {
     private let switchView: UISwitch = {
         let view = UISwitch()
         view.isOn = false
-        view.addTarget(self, action: #selector(toggleSwitch(_:)), for: .valueChanged)
         view.anchor(width: 60)
         view.onTintColor = UIColor.appColors.red
         return view
@@ -60,6 +62,8 @@ class OptionTableViewCell: UITableViewCell {
         addSubview(yesLbl)
         addSubview(noLbl)
         
+        switchView.addTarget(self, action: #selector(toggleSwitch(_:)), for: .valueChanged)
+        
         titleLbl.anchor(top: topAnchor, paddingTop: 20, bottom: bottomAnchor, paddingBottom: 20, left: leftAnchor, paddingLeft: 20, right: noLbl.leftAnchor, paddingRight: 10)
         switchView.anchor(paddingBottom: 12, right: yesLbl.leftAnchor)
         switchView.centerVertically(with: self)
@@ -67,11 +71,27 @@ class OptionTableViewCell: UITableViewCell {
         yesLbl.centerVertically(with: self)
         noLbl.anchor(right: switchView.leftAnchor, paddingRight: 4)
         noLbl.centerVertically(with: self)
-        
+    }
+    
+    private func setSwitchStatus() {
+        let currentVal = (formViewModel?.userInput[elementID!] ?? "No")
+        switchView.isOn = currentVal == "Yes" ? true : false
     }
     
     @objc private func toggleSwitch(_ sender: UISwitch) {
-        print("The switch has been toggled")
+        if sender.isOn {
+            formViewModel?.userInput[elementID!] = "Yes"
+        } else {
+            formViewModel?.userInput[elementID!] = "No"
+        }
+        formViewModel?.getElementsToHide(element: elementInfo!)
+        
+        guard let tables = self.allPagesTableViews else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            for table in tables {
+                table.reloadData()
+            }
+        }
     }
     
     required init?(coder: NSCoder) {

@@ -8,18 +8,27 @@
 
 import Foundation
 
-enum Conditions: String, Decodable {
-    case equals, greater, less, other
+enum Condition: String, Decodable {
+    case equals, other
     
     init(decoder: Decoder) throws {
         let label = try decoder.singleValueContainer().decode(String.self)
-        self = Conditions(rawValue: label) ?? .other
+        self = Condition(rawValue: label) ?? .other
+    }
+}
+
+enum RuleValue: String, Decodable {
+    case Yes, No, other
+    
+    init(decoder: Decoder) throws {
+        let label = try decoder.singleValueContainer().decode(String.self)
+        self = RuleValue(rawValue: label) ?? .other
     }
 }
 
 struct Rule: Decodable {
-    let condition: Conditions
-    let value: String
+    let condition: Condition
+    let value: RuleValue
     let action: String
     let otherwise: String
     let targets: [String]

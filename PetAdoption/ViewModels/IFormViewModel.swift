@@ -13,4 +13,7 @@ import RxDataSources
 protocol IFormViewModel {
     func getPagesTableViewIdentifiers()
     var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> { get }
+    var userInput: [String: String] { get set }
+    func getElementsToHide(element: Element)
+    func isCollapsed(id: String) -> Bool
 }

@@ -13,6 +13,12 @@ class TextTableViewCell: UITableViewCell {
     private var elementID: String?
     var tableView: UITableView?
     let disposeBag = DisposeBag()
+    var formViewModel: IFormViewModel? {
+        didSet {
+            setCellVisibility()
+            populateField()
+        }
+    }
     
     // MARK:- Create View Elements
     var elementInfo: Element? {
@@ -22,6 +28,9 @@ class TextTableViewCell: UITableViewCell {
             setKeyboardType(type: elementInfo!.keyboard ?? KeyboardType.normal)
             if let mode = elementInfo!.mode {
                 setPickerView(type: mode, options: elementInfo?.options)
+            } else {
+                textField.inputView = nil
+                textField.reloadInputViews()
             }
         }
     }
@@ -60,12 +69,40 @@ class TextTableViewCell: UITableViewCell {
         addSubview(textField)
         addSubview(titleLbl)
         
-        containerView.anchor(top: topAnchor, paddingTop: 20, bottom: bottomAnchor, paddingBottom: 20, left: leftAnchor, paddingLeft: 20, right: rightAnchor, paddingRight: 20)
-        titleLbl.anchor(top: containerView.topAnchor, paddingTop: 8, bottom: textField.topAnchor, paddingBottom: 8, left: containerView.leftAnchor, paddingLeft: 8, right: containerView.rightAnchor, paddingRight: 8)
-        textField.anchor(bottom: containerView.bottomAnchor, paddingBottom: 8, left: containerView.leftAnchor, paddingLeft: 8, right: containerView.rightAnchor, paddingRight: 8, height: 30)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        textField.rx.text.subscribe(onNext: { [weak self] text in
+            self?.updateUserInput(text: text)
+        }).disposed(by: disposeBag)
+        
+        textField.delegate = self
+    }
+    
+    private func updateUserInput(text: String?) {
+        formViewModel?.userInput[elementID!] = text
+    }
+    
+    private func populateField() {
+        textField.text = formViewModel?.userInput[elementID!] ?? ""
+    }
+    
+    private func setCellVisibility() {
+        if (formViewModel?.isCollapsed(id: elementID!) ?? false) {
+            self.isHidden = true
+            self.containerView.removeAllConstraints()
+            self.containerView.anchor(top: topAnchor, bottom: bottomAnchor, height: 1)
+        } else {
+            self.isHidden = false
+            self.containerView.removeAllConstraints()
+            self.addAllConstraints()
+        }
+    }
+    
+    private func addAllConstraints() {
+        containerView.anchor(top: topAnchor, paddingTop: 20, bottom: bottomAnchor, paddingBottom: 0, left: leftAnchor, paddingLeft: 20, right: rightAnchor, paddingRight: 20)
+        titleLbl.anchor(top: containerView.topAnchor, paddingTop: 8, bottom: textField.topAnchor, paddingBottom: 8, left: containerView.leftAnchor, paddingLeft: 8, right: containerView.rightAnchor, paddingRight: 8)
+        textField.anchor(bottom: containerView.bottomAnchor, paddingBottom: 8, left: containerView.leftAnchor, paddingLeft: 8, right: containerView.rightAnchor, paddingRight: 8, height: 30)
     }
     
     // MARK:- Keyboard visibility
@@ -139,5 +176,26 @@ class TextTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK:- TableView Delegate
+extension TextTableViewCell: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let _ = self.elementInfo?.formattedNumeric {
+            guard let textFieldText = textField.text,
+                let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                    return false
+            }
+            let substringToReplace = textFieldText[rangeOfTextToReplace]
+            let count = textFieldText.count - substringToReplace.count + string.count
+            
+            let pattern = self.elementInfo!.formattedNumeric!
+            guard let text = self.textField.text else { return false }
+            self.textField.text = text.formatPhoneNumber(pattern: pattern, replacementCharacter: "#")
+            return count <= pattern.count
+        }
+        return true
     }
 }
