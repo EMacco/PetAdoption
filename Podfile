@@ -10,6 +10,7 @@ target 'PetAdoption' do
   pod 'RxCocoa', '~> 5'
   pod 'SDWebImage'
   pod 'RxDataSources'
+  pod 'ProgressHUD'
 
   target 'PetAdoptionTests' do
     inherit! :search_paths

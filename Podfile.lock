@@ -1,5 +1,6 @@
 PODS:
   - Differentiator (4.0.1)
+  - ProgressHUD (2.60)
   - RxCocoa (5.0.0):
     - RxRelay (~> 5)
     - RxSwift (~> 5)
@@ -15,6 +16,7 @@ PODS:
   - SDWebImage/Core (5.3.2)
 
 DEPENDENCIES:
+  - ProgressHUD
   - RxCocoa (~> 5)
   - RxDataSources
   - RxSwift (~> 5)
@@ -23,6 +25,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Differentiator
+    - ProgressHUD
     - RxCocoa
     - RxDataSources
     - RxRelay
@@ -31,12 +34,13 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Differentiator: 886080237d9f87f322641dedbc5be257061b0602
+  ProgressHUD: 4e4efbaf4f5de8bd32e0c4c3b6644a90ea1a8c3e
   RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
   RxDataSources: efee07fa4de48477eca0a4611e6d11e2da9c1114
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SDWebImage: 6ac2eb96571bff96ecde31a987172c5934a0eb7d
 
-PODFILE CHECKSUM: d55a1f1298d8aa653596e20e1ac381f40445e479
+PODFILE CHECKSUM: 1b06fd4548aa3e1c50ba85396495c65cff030b98
 
 COCOAPODS: 1.8.4

@@ -81,7 +81,7 @@ class OptionTableViewCell: UITableViewCell {
     }
     
     private func setSwitchStatus() {
-        let currentVal = (formViewModel?.userInput[elementID!] ?? "No")
+        let currentVal = (formViewModel?.getUserInput(id: elementID!) ?? "No")
         switchView.isOn = currentVal == "Yes" ? true : false
         
         let mandatory = elementInfo?.isMandatory ?? false
@@ -97,9 +97,9 @@ class OptionTableViewCell: UITableViewCell {
     
     @objc private func toggleSwitch(_ sender: UISwitch) {
         if sender.isOn {
-            formViewModel?.userInput[elementID!] = "Yes"
+            formViewModel?.updateUserInput(id: elementID!, value: "Yes")
         } else {
-            formViewModel?.userInput[elementID!] = "No"
+            formViewModel?.updateUserInput(id: elementID!, value: "No")
         }
         formViewModel?.getElementsToHide(element: elementInfo!)
         

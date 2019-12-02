@@ -59,6 +59,15 @@
                 "options": ["Male", "Female"],
                 "isMandatory": false,
                 "rules": []
+            },
+            {
+                "mode": "select",
+                "type": "text",
+                "label": "Church",
+                "unique_id": "select_4",
+                "options": ["Presbyterian", "Anglican", "Methodist"],
+                "isMandatory": true,
+                "rules": []
             }
           ]
         }
@@ -141,6 +150,15 @@
               "isMandatory": true,
               "unique_id": "text_5",
               "rules": []
+            },
+            {
+                "type": "formattednumeric",
+                "label": "Phone Number",
+                "keyboard": "numeric",
+                "formattedNumeric": "(###)-####-####",
+                "isMandatory": true,
+                "unique_id": "formattednumeric_2",
+                "rules": []
             }
           ]
         }
