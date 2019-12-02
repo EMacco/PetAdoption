@@ -52,6 +52,13 @@ class OptionTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let requiredLbl: UILabel = {
+        let label = UILabel()
+        label.text = "*"
+        label.textColor = UIColor.appColors.red
+        return label
+    }()
+    
     // MARK:- Configure Views and constraints
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -64,7 +71,7 @@ class OptionTableViewCell: UITableViewCell {
         
         switchView.addTarget(self, action: #selector(toggleSwitch(_:)), for: .valueChanged)
         
-        titleLbl.anchor(top: topAnchor, paddingTop: 20, bottom: bottomAnchor, paddingBottom: 20, left: leftAnchor, paddingLeft: 20, right: noLbl.leftAnchor, paddingRight: 10)
+        titleLbl.anchor(top: topAnchor, paddingTop: 20, bottom: bottomAnchor, paddingBottom: 20, right: noLbl.leftAnchor, paddingRight: 10)
         switchView.anchor(paddingBottom: 12, right: yesLbl.leftAnchor)
         switchView.centerVertically(with: self)
         yesLbl.anchor(left: switchView.rightAnchor, paddingLeft: 8, right: rightAnchor, paddingRight: 20)
@@ -76,6 +83,16 @@ class OptionTableViewCell: UITableViewCell {
     private func setSwitchStatus() {
         let currentVal = (formViewModel?.userInput[elementID!] ?? "No")
         switchView.isOn = currentVal == "Yes" ? true : false
+        
+        let mandatory = elementInfo?.isMandatory ?? false
+        if mandatory {
+            addSubview(requiredLbl)
+            requiredLbl.anchor(top: topAnchor, paddingTop: 25, left: leftAnchor, paddingLeft: 20, width: 10, height: 10)
+            titleLbl.anchor(left: leftAnchor, paddingLeft: 30)
+        } else {
+            requiredLbl.removeFromSuperview()
+            titleLbl.anchor(left: leftAnchor, paddingLeft: 20)
+        }
     }
     
     @objc private func toggleSwitch(_ sender: UISwitch) {
