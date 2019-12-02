@@ -87,11 +87,11 @@ class TextTableViewCell: UITableViewCell {
     }
     
     private func updateUserInput(text: String?) {
-        formViewModel?.userInput[elementID!] = text
+        formViewModel?.updateUserInput(id: elementID!, value: text)
     }
     
     private func populateField() {
-        textField.text = formViewModel?.userInput[elementID!] ?? ""
+        textField.text = formViewModel?.getUserInput(id: elementID!) ?? ""
     }
     
     private func setCellVisibility() {

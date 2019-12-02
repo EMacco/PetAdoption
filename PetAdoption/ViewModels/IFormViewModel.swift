@@ -11,9 +11,12 @@ import RxSwift
 import RxDataSources
 
 protocol IFormViewModel {
+    func submitForm()
     func getPagesTableViewIdentifiers()
-    var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> { get }
-    var userInput: [String: String] { get set }
-    func getElementsToHide(element: Element)
     func isCollapsed(id: String) -> Bool
+    func getElementsToHide(element: Element)
+    func getUserInput(id: String) -> String?
+    func updateUserInput(id: String, value: String?)
+    var formSubmitionResponse: PublishSubject<String> { get }
+    var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> { get }
 }

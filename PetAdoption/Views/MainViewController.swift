@@ -9,6 +9,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import ProgressHUD
 import RxDataSources
 
 class MainViewController: UIViewController {
@@ -80,7 +81,7 @@ class MainViewController: UIViewController {
     
     // MARK:- Switch between pages
     @objc private func showNextPage() {
-        guard currentPage < (formTableViews.count) else { return }
+        guard currentPage < (formTableViews.count) else { return self.formViewModel!.submitForm() }
         currentPage += 1
         scrollTo(page: currentPage)
     }
@@ -117,6 +118,14 @@ class MainViewController: UIViewController {
             }
             
             self?.updateViews()
+        }.disposed(by: disposeBag)
+        
+        formViewModel?.formSubmitionResponse.bind { error in
+            if error == "" {
+                ProgressHUD.showSuccess("Validation Successful")
+            } else {
+                ProgressHUD.showError(error)
+            }
         }.disposed(by: disposeBag)
     }
 

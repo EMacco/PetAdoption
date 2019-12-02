@@ -12,10 +12,14 @@ import RxDataSources
 
 class FormViewModel: IFormViewModel {
     
-    var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> = PublishSubject()
     var form: Form?
-    var collapsedElements = Set<String>()
-    var userInput = [String: String]()
+    private var emailElements = Set<String>()
+    private var userInput = [String: String]()
+    private var collapsedElements = Set<String>()
+    private var mandatoryElements = Set<String>()
+    private var formattedStringElements = [String: String]()
+    var formSubmitionResponse: PublishSubject<String> = PublishSubject()
+    var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> = PublishSubject()
     
     init() {
         self.form = getJsonData()
@@ -40,12 +44,28 @@ class FormViewModel: IFormViewModel {
             var sectionElements = [Element]()
             for element in section.elements {
                 sectionElements.append(element)
+                extractValidationFields(element)
             }
             pageInfo.append(SectionModel(model: section.label, items: sectionElements))
         }
 
         return pageInfo
         
+    }
+    
+    // MARK:- Validation Fields
+    private func extractValidationFields(_ element: Element) {
+        if element.isMandatory ?? false {
+            mandatoryElements.insert(element.uniqueId)
+        }
+        
+        if let keyboard = element.keyboard, keyboard == .email {
+            emailElements.insert(element.uniqueId)
+        }
+        
+        if let keyboard = element.keyboard, keyboard == .numeric {
+            formattedStringElements[element.uniqueId] = element.formattedNumeric
+        }
     }
     
     // MARK:- Retrieve and Decode JSON Data
@@ -124,4 +144,22 @@ class FormViewModel: IFormViewModel {
         }
     }
     
+    // MARK:- Update and Retrieve User Input
+    func getUserInput(id: String) -> String? {
+        return userInput[id]
+    }
+    
+    func updateUserInput(id: String, value: String?) {
+        userInput[id] = value
+    }
+    
+    // MARK:- Form Submission
+    func submitForm() {
+        let error =  FormValidation.validateForm(input: userInput,
+                                                 mandatory: mandatoryElements,
+                                                 emails: emailElements,
+                                                 formattedString: formattedStringElements)
+        
+        formSubmitionResponse.onNext(error ?? "")
+    }
 }
