@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
     var nextBtn: UIButton!
     var currentPage = 1
     var currentXPosition: CGFloat = 0
-    var pageWidth = UIScreen.main.bounds.width
+    var formName: String?
     
     convenience init(formViewModel: IFormViewModel) {
         self.init()
@@ -39,13 +39,8 @@ class MainViewController: UIViewController {
         formViewModel?.getPagesTableViewIdentifiers()
     }
     
+    // MARK:- Handle Orientation Change
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        if UIDevice.current.orientation == .portrait {
-            pageWidth = screenSize.width
-        } else {
-            pageWidth = screenSize.height
-        }
-        
         DispatchQueue.main.async {
             self.scrollTo(page: self.currentPage)
         }
@@ -93,7 +88,7 @@ class MainViewController: UIViewController {
     }
     
     private func scrollTo(page: Int) {
-        currentXPosition = -(CGFloat(page - 1) * pageWidth)
+        currentXPosition = -(CGFloat(page - 1) * (formTableViews.first?.frame.width ?? 0))
         
         if currentPage == formTableViews.count {
             nextBtn.setTitle("Submit", for: .normal)
@@ -109,6 +104,14 @@ class MainViewController: UIViewController {
     
     // MARK:- Bind Listeners
     func setupBindings() {
+        formViewModel?.formNameResponse.bind { [weak self] name in
+            if name == "" {
+                ProgressHUD.showError("Invalid JSON Data. Error decoding object")
+            } else {
+                self?.formName = name
+            }
+        }.disposed(by: disposeBag)
+        
         formViewModel?.pagesTableViewIdentifiers.bind { [weak self] pagesConfigurations in
             for (pageIndex, page) in pagesConfigurations.enumerated() {
                 self?.configureFormPageWithCells(name: page.name, config: page.identifiers, index: pageIndex)
@@ -129,6 +132,7 @@ class MainViewController: UIViewController {
         }.disposed(by: disposeBag)
     }
 
+    // MARK:- Bind Datasources
     private func bindDataSourceTo(page tableView: UITableView, dataSource: [SectionModel<String, Element>]) {
         let tableViewObservable = Observable.just(dataSource)
         let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, Element>>(configureCell: { dataSource, table, indexPath, item in
@@ -179,7 +183,7 @@ class MainViewController: UIViewController {
     // MARK:- Create Form Pages
     private func configureFormPageWithCells(name pageName: String, config identifiers: [ElementType], index pageIndex: Int) {
         let tableView = createTableView(with: identifiers)
-        let titleLbl = createTitleLbl(name: pageName)
+        let titleLbl = createTitleLbl(name: pageIndex == 0 ? self.formName! : pageName)
         let backBtn = createBackBtn(index: pageIndex)
         
         backBtn?.anchor(bottom: titleLbl.bottomAnchor, paddingBottom: 8, left: tableView.leftAnchor, paddingLeft: 16, width: 40, height: 40)
@@ -193,7 +197,7 @@ class MainViewController: UIViewController {
             let previousView = self.formTableViews[pageIndex-1]
             tableView.anchor(left: previousView.rightAnchor, paddingLeft: 0)
         } else {
-            tableView.anchor(left: containerView!.leftAnchor, paddingLeft: 0, width: pageWidth)
+            tableView.anchor(left: containerView!.leftAnchor, paddingLeft: 0)
         }
         
         self.formTableViews.append(tableView)

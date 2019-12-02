@@ -10,7 +10,7 @@ import Foundation
 
 struct Element: Decodable {
     let type: ElementType
-    let rules: [Rule]
+    let rules: [Rule]?
     let uniqueId: String
     let file: String?
     let label: String?
@@ -32,12 +32,6 @@ enum ElementType: String, Decodable {
     case yesNo = "yesno"
     case formattedNumeric = "formattednumeric"
     case dateTime = "datetime"
-    case other
-    
-    init(from decoder: Decoder) throws {
-        let label = try decoder.singleValueContainer().decode(String.self)
-        self = ElementType(rawValue: label) ?? .other
-    }
 }
 
 //  MARK:- Keyboard Type Enum
@@ -46,21 +40,10 @@ enum KeyboardType: String, Decodable {
     case email
     case normal
     case password
-    
-    init(from decoder: Decoder) throws {
-        let label = try decoder.singleValueContainer().decode(String.self)
-        self = KeyboardType(rawValue: label) ?? .normal
-    }
 }
 
 //  MARK:- Picker Mode Enum
 enum Mode: String, Decodable {
     case date
     case select
-    case other
-    
-    init(from decoder: Decoder) throws {
-        let label = try decoder.singleValueContainer().decode(String.self)
-        self = Mode(rawValue: label) ?? .other
-    }
 }

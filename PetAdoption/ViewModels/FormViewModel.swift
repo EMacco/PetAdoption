@@ -18,15 +18,13 @@ class FormViewModel: IFormViewModel {
     private var collapsedElements = Set<String>()
     private var mandatoryElements = Set<String>()
     private var formattedStringElements = [String: String]()
+    var formNameResponse: PublishSubject<String> = PublishSubject()
     var formSubmitionResponse: PublishSubject<String> = PublishSubject()
     var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> = PublishSubject()
     
-    init() {
-        self.form = getJsonData()
-    }
-    
     // MARK:- Generate tableviews
     func getPagesTableViewIdentifiers() {
+        self.form = getJsonData()
         if let pages = self.form?.pages {
             var pagesConfig = [PageConfig]()
             for page in pages {
@@ -75,11 +73,13 @@ class FormViewModel: IFormViewModel {
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(Form.self, from: data)
+                formNameResponse.onNext(jsonData.name.capitalized)
                 return jsonData
             } catch let error {
                 print(error.localizedDescription)
             }
         }
+        formNameResponse.onNext("")
         return nil
     }
     
@@ -99,7 +99,7 @@ class FormViewModel: IFormViewModel {
     
     // MARK:- Show/Hide Elements
     func getElementsToHide(element: Element) {
-        for rule in element.rules {
+        for rule in element.rules ?? [] {
             let actual = RuleValue(rawValue: userInput[element.uniqueId] ?? "No") ?? RuleValue.No
             let expected = rule.value
             if compareRule(actual: actual, expected: expected, operation: rule.condition) {
