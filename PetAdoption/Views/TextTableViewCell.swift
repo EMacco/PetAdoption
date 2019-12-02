@@ -60,6 +60,13 @@ class TextTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let requiredLbl: UILabel = {
+        let label = UILabel()
+        label.text = "*"
+        label.textColor = UIColor.appColors.red
+        return label
+    }()
+    
     // MARK:- Configure Views and constraints
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -101,8 +108,18 @@ class TextTableViewCell: UITableViewCell {
     
     private func addAllConstraints() {
         containerView.anchor(top: topAnchor, paddingTop: 20, bottom: bottomAnchor, paddingBottom: 0, left: leftAnchor, paddingLeft: 20, right: rightAnchor, paddingRight: 20)
-        titleLbl.anchor(top: containerView.topAnchor, paddingTop: 8, bottom: textField.topAnchor, paddingBottom: 8, left: containerView.leftAnchor, paddingLeft: 8, right: containerView.rightAnchor, paddingRight: 8)
+        titleLbl.anchor(top: containerView.topAnchor, paddingTop: 8, bottom: textField.topAnchor, paddingBottom: 8, right: containerView.rightAnchor, paddingRight: 8)
         textField.anchor(bottom: containerView.bottomAnchor, paddingBottom: 8, left: containerView.leftAnchor, paddingLeft: 8, right: containerView.rightAnchor, paddingRight: 8, height: 30)
+        
+        let mandatory = elementInfo?.isMandatory ?? false
+        if mandatory {
+            containerView.addSubview(requiredLbl)
+            requiredLbl.anchor(top: containerView.topAnchor, paddingTop: 12, left: containerView.leftAnchor, paddingLeft: 8, width: 10, height: 10)
+            titleLbl.anchor(left: containerView.leftAnchor, paddingLeft: 18)
+        } else {
+            requiredLbl.removeFromSuperview()
+            titleLbl.anchor(left: containerView.leftAnchor, paddingLeft: 8)
+        }
     }
     
     // MARK:- Keyboard visibility
