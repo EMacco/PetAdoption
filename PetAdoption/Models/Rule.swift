@@ -9,21 +9,12 @@
 import Foundation
 
 enum Condition: String, Decodable {
-    case equals, other
-    
-    init(decoder: Decoder) throws {
-        let label = try decoder.singleValueContainer().decode(String.self)
-        self = Condition(rawValue: label) ?? .other
-    }
+    case equals
 }
 
 enum RuleValue: String, Decodable {
-    case Yes, No, other
-    
-    init(decoder: Decoder) throws {
-        let label = try decoder.singleValueContainer().decode(String.self)
-        self = RuleValue(rawValue: label) ?? .other
-    }
+    case Yes
+    case No
 }
 
 struct Rule: Decodable {

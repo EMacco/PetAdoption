@@ -17,6 +17,7 @@ protocol IFormViewModel {
     func getElementsToHide(element: Element)
     func getUserInput(id: String) -> String?
     func updateUserInput(id: String, value: String?)
+    var formNameResponse: PublishSubject<String> { get }
     var formSubmitionResponse: PublishSubject<String> { get }
     var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> { get }
 }

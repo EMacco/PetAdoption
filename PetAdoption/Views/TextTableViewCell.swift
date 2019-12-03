@@ -126,7 +126,7 @@ class TextTableViewCell: UITableViewCell {
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let _ = notification.userInfo {
             if let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height {
-                self.tableView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+                self.tableView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight - 80, right: 0)
             }
         }
     }
