@@ -14,8 +14,8 @@ class FormValidation {
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         
         for id in emails {
-            guard let email = input[id] else { continue }
-            if !emailTest.evaluate(with: email.trimmingCharacters(in: .whitespacesAndNewlines)) {
+            guard let email = input[id]?.trimmingCharacters(in: .whitespacesAndNewlines), email != "" else { continue }
+            if !emailTest.evaluate(with: email) {
                 return "\(email) is not a valid email"
             }
         }
@@ -25,7 +25,7 @@ class FormValidation {
     
     private static func matchesPattern(formatted: [String: String], input: [String: String]) -> String? {
         for (id, pattern) in formatted {
-            guard let value = input[id] else { continue }
+            guard let value = input[id]?.trimmingCharacters(in: .whitespacesAndNewlines), value != "" else { continue }
             let error = "\(value) does not match pattern \(pattern)"
             if value.count != pattern.count { return error }
             

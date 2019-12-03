@@ -156,7 +156,7 @@
                 "label": "Phone Number",
                 "keyboard": "numeric",
                 "formattedNumeric": "(###)-####-####",
-                "isMandatory": true,
+                "isMandatory": false,
                 "unique_id": "formattednumeric_2",
                 "rules": []
             }
