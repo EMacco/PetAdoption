@@ -118,8 +118,8 @@ This represents the type of keyboard that should be displayed.
 This is an array of rules and actions that should be executed when an action occurs
 ```
 [
-	condition: String (equal)
-	value: String
+	condition: String (equals)
+	value: String (Yes, No)
 	action: String (show, hide)
 	otherwise: String(show, hide)
 	targets: []
@@ -130,7 +130,7 @@ This is an array of rules and actions that should be executed when an action occ
 The type of comparison we want to carry out between expected and actual values. Currently, the application supports just `equals` to check that two values are the same
 
 ###### Value: 
-What we will be comparing against
+What we will be comparing against. Currently the application supports `Yes` and `No` as possible values for the switch
 
 ###### Action: 
 What to do if the comparison returns `true`. Currently, the application simply supports show and hide to toggle field visibility
@@ -198,21 +198,29 @@ This is a list of element IDs that the action will be applied to.
               "rules": []
             },
             {
-                "mode": "select",
-                "type": "text",
-                "label": "Gender",
-                "unique_id": "select_1",
-                "options": ["Male", "Female"],
-                "isMandatory": false,
-                "rules": []
+              "type": "yesno",
+              "label": "Are you a christian?",
+              "isMandatory": false,
+              "unique_id": "yesno_1",
+              "rules": [
+                {
+                  "condition": "equals",
+                  "value": "Yes",
+                  "action": "show",
+                  "otherwise": "hide",
+                  "targets": [
+                    "select_4"
+                  ]
+                }
+              ]
             },
             {
                 "mode": "select",
                 "type": "text",
-                "label": "Church",
+                "label": "What church do you attend?",
                 "unique_id": "select_4",
                 "options": ["Presbyterian", "Anglican", "Methodist"],
-                "isMandatory": true,
+                "isMandatory": false,
                 "rules": []
             }
           ]
@@ -224,5 +232,5 @@ This is a list of element IDs that the action will be applied to.
 ```
 
 ### Screenshot
-![Simulator Screen Shot - iPhone 11 - 2019-12-03 at 07 51 05](https://user-images.githubusercontent.com/20377428/70027315-28b42000-15a2-11ea-91a0-228993350cd8.png)
+![Simulator Screen Shot - iPhone 11 - 2019-12-03 at 08 12 11](https://user-images.githubusercontent.com/20377428/70028362-bdb81880-15a4-11ea-8363-c2ab0d0710a2.png)
 
