@@ -19,8 +19,7 @@
 		1257288B238EB4E700D418D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257288A238EB4E700D418D3 /* SceneDelegate.swift */; };
 		12572892238EB4E900D418D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12572891238EB4E900D418D3 /* Assets.xcassets */; };
 		12572895238EB4E900D418D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12572893238EB4E900D418D3 /* LaunchScreen.storyboard */; };
-		125728A0238EB4E900D418D3 /* PetAdpotionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257289F238EB4E900D418D3 /* PetAdpotionTests.swift */; };
-		125728AB238EB4E900D418D3 /* PetAdpotionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125728AA238EB4E900D418D3 /* PetAdpotionUITests.swift */; };
+		125728AB238EB4E900D418D3 /* PetAdoptionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125728AA238EB4E900D418D3 /* PetAdoptionUITests.swift */; };
 		1257BCB4238F10DC00B00333 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257BCB3238F10DC00B00333 /* MainViewController.swift */; };
 		1257BCB6238F137E00B00333 /* IFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257BCB5238F137E00B00333 /* IFormViewModel.swift */; };
 		1257BCB8238F138800B00333 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257BCB7238F138800B00333 /* FormViewModel.swift */; };
@@ -29,6 +28,7 @@
 		126C8350238FFBB2008C9E1B /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126C834F238FFBB2008C9E1B /* PhotoTableViewCell.swift */; };
 		126C8354238FFBCF008C9E1B /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126C8353238FFBCF008C9E1B /* TextTableViewCell.swift */; };
 		126C8356238FFBDB008C9E1B /* OptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126C8355238FFBDB008C9E1B /* OptionTableViewCell.swift */; };
+		12C8653423997B94008FE5D2 /* PetAdoptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1257289F238EB4E900D418D3 /* PetAdoptionTests.swift */; };
 		12EAF3C3238F01BB0082CEFC /* pet_adoption.json in Resources */ = {isa = PBXBuildFile; fileRef = 12EAF3C2238F01BB0082CEFC /* pet_adoption.json */; };
 		5A2ADB630F59A2F38050D835 /* Pods_PetAdoptionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CFCA71A691A8BA0EDFCB1A7 /* Pods_PetAdoptionTests.framework */; };
 		93C001691A585964B5133889 /* Pods_PetAdoption.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAC64401A2894E2609BEF793 /* Pods_PetAdoption.framework */; };
@@ -70,10 +70,10 @@
 		12572894238EB4E900D418D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		12572896238EB4E900D418D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1257289B238EB4E900D418D3 /* PetAdoptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PetAdoptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1257289F238EB4E900D418D3 /* PetAdpotionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetAdpotionTests.swift; sourceTree = "<group>"; };
+		1257289F238EB4E900D418D3 /* PetAdoptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetAdoptionTests.swift; sourceTree = "<group>"; };
 		125728A1238EB4E900D418D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		125728A6238EB4E900D418D3 /* PetAdoptionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PetAdoptionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		125728AA238EB4E900D418D3 /* PetAdpotionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetAdpotionUITests.swift; sourceTree = "<group>"; };
+		125728AA238EB4E900D418D3 /* PetAdoptionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetAdoptionUITests.swift; sourceTree = "<group>"; };
 		125728AC238EB4E900D418D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1257BCB3238F10DC00B00333 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1257BCB5238F137E00B00333 /* IFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IFormViewModel.swift; sourceTree = "<group>"; };
@@ -178,7 +178,7 @@
 		1257289E238EB4E900D418D3 /* PetAdoptionTests */ = {
 			isa = PBXGroup;
 			children = (
-				1257289F238EB4E900D418D3 /* PetAdpotionTests.swift */,
+				1257289F238EB4E900D418D3 /* PetAdoptionTests.swift */,
 				125728A1238EB4E900D418D3 /* Info.plist */,
 			);
 			path = PetAdoptionTests;
@@ -187,7 +187,7 @@
 		125728A9238EB4E900D418D3 /* PetAdoptionUITests */ = {
 			isa = PBXGroup;
 			children = (
-				125728AA238EB4E900D418D3 /* PetAdpotionUITests.swift */,
+				125728AA238EB4E900D418D3 /* PetAdoptionUITests.swift */,
 				125728AC238EB4E900D418D3 /* Info.plist */,
 			);
 			path = PetAdoptionUITests;
@@ -533,7 +533,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				125728A0238EB4E900D418D3 /* PetAdpotionTests.swift in Sources */,
+				12C8653423997B94008FE5D2 /* PetAdoptionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,7 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				125728AB238EB4E900D418D3 /* PetAdpotionUITests.swift in Sources */,
+				125728AB238EB4E900D418D3 /* PetAdoptionUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,14 +732,14 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RT459C64W3;
-				INFOPLIST_FILE = PetAdpotionTests/Info.plist;
+				INFOPLIST_FILE = PetAdoptionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.macco.PetAdpotionTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macco.PetAdoptionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -755,14 +755,14 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RT459C64W3;
-				INFOPLIST_FILE = PetAdpotionTests/Info.plist;
+				INFOPLIST_FILE = PetAdoptionTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.macco.PetAdpotionTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macco.PetAdoptionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -777,17 +777,17 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RT459C64W3;
-				INFOPLIST_FILE = PetAdpotionUITests/Info.plist;
+				INFOPLIST_FILE = PetAdoptionUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.macco.PetAdpotionUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macco.PetAdoptionUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PetAdpotion;
+				TEST_TARGET_NAME = PetAdoption;
 			};
 			name = Debug;
 		};
@@ -798,17 +798,17 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RT459C64W3;
-				INFOPLIST_FILE = PetAdpotionUITests/Info.plist;
+				INFOPLIST_FILE = PetAdoptionUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.macco.PetAdpotionUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macco.PetAdoptionUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PetAdpotion;
+				TEST_TARGET_NAME = PetAdoption;
 			};
 			name = Release;
 		};
