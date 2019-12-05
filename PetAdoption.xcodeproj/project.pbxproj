@@ -694,7 +694,7 @@
 				CLANG_OPTIMIZATION_PROFILE_FILE = "OptimizationProfiles/$(PROJECT_NAME).profdata";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = RT459C64W3;
 				INFOPLIST_FILE = PetAdoption/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -720,7 +720,7 @@
 				CLANG_OPTIMIZATION_PROFILE_FILE = "OptimizationProfiles/$(PROJECT_NAME).profdata";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = RT459C64W3;
 				INFOPLIST_FILE = PetAdoption/Application/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
