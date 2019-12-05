@@ -1,5 +1,7 @@
 # Pet Adoption (Form Builder)
 
+[![CircleCI](https://circleci.com/gh/EMacco/PetAdoption.svg?style=svg)](https://circleci.com/gh/EMacco/PetAdoption)
+
 This is an iOS application developed with Swift, that allows users to be able to dynamically generate a form using raw JSON data.
 
 # Features
