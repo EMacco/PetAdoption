@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.003607">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: setup_circle_ci" time="0.001981">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: setup_circle_ci" time="0.001871">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: get_build_number" time="0.181982">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: changelog_from_git_commits" time="0.011313">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: match" time="4.465406">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: build_app" time="135.692013">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: upload_to_testflight" time="129.227969">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

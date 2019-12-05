@@ -26,6 +26,40 @@ jobs:
       - store_artifacts:
           path: ~/Library/Logs/scan
           destination: scan-logs
+  bump-build:
+    macos:
+      xcode: "11.2.1"
+    environment:
+      - LC_ALL: "en_US.UTF-8"
+      - LANG: "en_US.UTF-8"
+    steps:
+      - checkout
+      - run:
+          name: Installing gem dependencies
+          command: bundle install
+      - add_ssh_keys:
+          fingerprints:
+            - "c7:0f:24:08:5d:46:30:ec:d9:2c:05:86:78:51:02:02"
+      - run:
+          name: Bump the build number and commit
+          command: bundle exec fastlane bump
+  deploy-beta:
+    macos:
+      xcode: "11.2.1"
+    environment:
+      - LC_ALL: "en_US.UTF-8"
+      - LANG: "en_US.UTF-8"
+    steps:
+      - checkout
+      - run:
+          name: Installing gem dependencies
+          command: bundle install
+      - add_ssh_keys:
+          fingerprints:
+            - "03:ba:57:70:9c:79:66:eb:c5:34:fd:79:77:03:38:da"
+      - run:
+          name: Deploy new build to TestFlight
+          command: bundle exec fastlane submit_to_testflight
           
 workflows:
   version: 2
@@ -35,3 +69,19 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - bump-build:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              only: staging
+            tags:
+              only: /.*/
+      - deploy-beta:
+          requires:
+            - build-and-test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^builds.*/
