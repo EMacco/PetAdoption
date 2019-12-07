@@ -13,6 +13,7 @@ import RxDataSources
 class FormViewModel: IFormViewModel {
     
     var form: Form?
+    let formLocal: IFormLocal
     private var emailElements = Set<String>()
     private var userInput = [String: String]()
     private var collapsedElements = Set<String>()
@@ -22,15 +23,24 @@ class FormViewModel: IFormViewModel {
     var formSubmitionResponse: PublishSubject<String> = PublishSubject()
     var pagesTableViewIdentifiers: PublishSubject<[PageConfig]> = PublishSubject()
     
+    
+    init(formLocal: IFormLocal) {
+        self.formLocal = formLocal
+    }
+    
     // MARK:- Generate tableviews
     func getPagesTableViewIdentifiers() {
-        self.form = getJsonData()
-        if let pages = self.form?.pages {
+        self.form = formLocal.getJsonData(from: "pet_adoption")
+        if let formName = form?.name {
+            formNameResponse.onNext(formName.capitalized)
+            guard let pages = self.form?.pages else { return }
             var pagesConfig = [PageConfig]()
             for page in pages {
                 pagesConfig.append(PageConfig(name: page.label, identifiers: getTableViewCellIdentifiers(for: page), dataSource: getDataSource(for: page)))
             }
             self.pagesTableViewIdentifiers.onNext(pagesConfig)
+        } else {
+            formNameResponse.onNext("")
         }
     }
     
@@ -64,23 +74,6 @@ class FormViewModel: IFormViewModel {
         if let keyboard = element.keyboard, keyboard == .numeric {
             formattedStringElements[element.uniqueId] = element.formattedNumeric
         }
-    }
-    
-    // MARK:- Retrieve and Decode JSON Data
-    private func getJsonData() -> Form? {
-        if let url = Bundle.main.url(forResource: "pet_adoption", withExtension: "json") {
-            do {
-                let data = try Data(contentsOf: url)
-                let decoder = JSONDecoder()
-                let jsonData = try decoder.decode(Form.self, from: data)
-                formNameResponse.onNext(jsonData.name.capitalized)
-                return jsonData
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
-        formNameResponse.onNext("")
-        return nil
     }
     
     // MARK:- Get tableview identifiers
